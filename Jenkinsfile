@@ -9,7 +9,7 @@ pipeline {
         stage('Tai Maven') {
             steps {
                 echo 'Tai Maven ne'
-                sh 'sudo apt install maven'
+                sh 'apt install maven'
                 sh 'mvn --version'
             }
         }
