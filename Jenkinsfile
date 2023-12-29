@@ -10,7 +10,7 @@ pipeline {
             steps {
                 withDockerRegistry(credentialsId: 'dockerhub-nmd', url: 'https://index.docker.io/v1/') {
                     sh 'docker build -t nguyenmanhdung/jenkins-helloworl:0.0.1 .'
-                    sh 'docker build -t nguyenmanhdung/jenkins-helloworl:0.0.1 '
+                    sh 'docker push nguyenmanhdung/jenkins-helloworl:0.0.1'
                 }
             }
         }
