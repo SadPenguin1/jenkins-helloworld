@@ -37,8 +37,8 @@ pipeline {
 		        script {
 		            // Chạy lệnh java -jar
 		            sh "java -jar $WORKSPACE/test/target/test-0.0.1-SNAPSHOT.jar"
-		            sleep time: 30, unit: 'SECONDS'
-            		sh 'pkill -f "java -jar"'
+		            sleep time: 10, unit: 'SECONDS'
+            		sh 'pkill -f "java -jar $WORKSPACE/test/target/test-0.0.1-SNAPSHOT.jar"'
 		        }
 		    }
 		}
