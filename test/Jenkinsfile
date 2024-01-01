@@ -32,15 +32,21 @@ pipeline {
 		        }
 		    }
 		}
-		stage('Run Jar') {
+		stage('Build image') {
 		    steps {
 		        script {
-		            timeout(time: 10, unit: 'SECONDS') {
-		                sh "java -jar $WORKSPACE/test/target/test-0.0.1-SNAPSHOT.jar"
-		            }
+			        dir('test') {
+			            withDockerRegistry(credentialsId: 'docker-hub', url: 'https://index.docker.io/v1/') {
+		          		sh 'docker build -t nguyenmanhdung/jenkins-helloworld:0.0.1 .'
+		          		sh 'docker push nguyenmanhdung/jenkins-helloworld:0.0.1'	          		
+						}
+			        }
 		        }
 		    }
 		}
+		
+		
+	
 
 		
 
