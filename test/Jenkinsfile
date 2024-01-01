@@ -20,6 +20,15 @@ pipeline {
                 }
             }
         }
+        stage('Test Code') {
+            steps {
+                script {
+                    sh 'ls'
+                    sh 'cd test'
+                    sh 'ls'
+                }
+            }
+        }
     // stage('Build image') {
     //     steps {
     //         withDockerRegistry(credentialsId: 'dockerhub-nmd', url: 'https://index.docker.io/v1/') {
