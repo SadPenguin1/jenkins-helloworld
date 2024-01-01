@@ -20,18 +20,27 @@ pipeline {
                 }
             }
         }
-        stage('Test Code') {
-    steps {
-        script {
-            
-            sh 'ls'          
-            dir('test') {
-                sh 'ls'
-                sh 'mvn clean install'
-            }
-        }
-    }
-}
+        stage('Build Jar') {
+		    steps {
+		        script {
+		            
+		            sh 'ls'          
+		            dir('test') {
+		                sh 'ls'
+		                sh 'mvn clean install'
+		            }
+		        }
+		    }
+		}
+		stage('Run Jar') {
+		    steps {
+		        script {
+		            // Chạy lệnh java -jar
+		            sh "java -jar $WORKSPACE/test/target/test-0.0.1-SNAPSHOT.jar"
+		        }
+		    }
+		}
+		
 
     // stage('Build image') {
     //     steps {
