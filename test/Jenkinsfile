@@ -21,14 +21,18 @@ pipeline {
             }
         }
         stage('Test Code') {
-            steps {
-                script {
-                    sh 'ls'
-                    sh 'cd test'
-                    sh 'ls'
-                }
+    steps {
+        script {
+            
+            sh 'ls'          
+            dir('test') {
+                sh 'ls'
+                sh 'mvn clean install'
             }
         }
+    }
+}
+
     // stage('Build image') {
     //     steps {
     //         withDockerRegistry(credentialsId: 'dockerhub-nmd', url: 'https://index.docker.io/v1/') {
