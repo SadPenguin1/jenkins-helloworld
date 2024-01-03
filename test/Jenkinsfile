@@ -6,13 +6,6 @@ pipeline {
                 echo 'Hello Nguyen Manh Dung'
             }
         }
-        stage('Install Maven') {
-            steps {
-                script {
-                    sh 'apt-get update && apt-get install -y maven'
-                }
-            }
-        }
         stage('Check Maven Version') {
             steps {
                 script {
