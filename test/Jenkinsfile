@@ -9,7 +9,7 @@ pipeline {
         stage('Check Maven Version') {
             steps {
                 script {
-                    sh 'mvn --version'
+                    sh '/opt/apache-maven-3.9.6/bin/mvn --version'
                 }
             }
         }
