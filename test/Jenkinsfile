@@ -47,8 +47,30 @@ pipeline {
 		}
 		stage('SSH-Remote') {
 		    steps {
-		       		sshPublisher(publishers: [sshPublisherDesc(configName: 'ssh-remote-56', transfers: [sshTransfer(cleanRemote: false, excludes: '', execCommand: 'ls', execTimeout: 120000, flatten: false, makeEmptyDirs: false, noDefaultExcludes: false, patternSeparator: '[, ]+', remoteDirectory: '', remoteDirectorySDF: false, removePrefix: '', sourceFiles: '')], usePromotionTimestamp: false, useWorkspaceInPromotion: false, verbose: false)])
-
+		       	sshPublisher(publishers: [
+				    sshPublisherDesc(
+				        configName: 'ssh-remote-56',
+				        transfers: [
+				            sshTransfer(
+				                cleanRemote: false,
+				                excludes: '',
+				                execCommand: 'ls && docker pull nguyenmanhdung/jenkins-helloworld:0.0.2 && docker run -d -p 9888:9888 nguyenmanhdung/jenkins-helloworld:0.0.2',
+				                execTimeout: 120000,
+				                flatten: false,
+				                makeEmptyDirs: false,
+				                noDefaultExcludes: false,
+				                patternSeparator: '[, ]+',
+				                remoteDirectory: '',
+				                remoteDirectorySDF: false,
+				                removePrefix: '',
+				                sourceFiles: ''
+				            )
+				        ],
+				        usePromotionTimestamp: false,
+				        useWorkspaceInPromotion: false,
+				        verbose: false
+				    )
+				])
 		    }
 		}
 
