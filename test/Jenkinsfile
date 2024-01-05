@@ -48,7 +48,7 @@ pipeline {
 		stage('SSH-Remote') {
 		    steps {
 		       sshagent(['ssh-remote-192.168.10.56']) {
-		       		sh "ssh -o StrictHostKeyChecking=no -l rnd ${REMOTE_SERVER_IP} ls"
+		       		sh "ssh -o StrictHostKeyChecking=no -l root ${REMOTE_SERVER_IP} ls"
 
 				}
 		    }
