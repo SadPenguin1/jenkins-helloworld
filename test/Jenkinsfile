@@ -1,5 +1,12 @@
 pipeline {
     agent any
+    environment {
+        REMOTE_SERVER_IP = '192.168.10.56'
+        REMOTE_SERVER_SSH_PORT = '22'
+        REMOTE_SERVER_USER = 'rnd'
+        REMOTE_SERVER_PASSWORD = 'abcd456789'
+        IMAGE_VERSION = 'nguyenmanhdung/jenkins-helloworld:0.0.2'
+    }
     stages {
         stage('Clone stage') {
             steps {
@@ -38,23 +45,21 @@ pipeline {
 		        }
 		    }
 		}
-		
-		
-	
-
-		
-
-    // stage('Build image') {
-    //     steps {
-    //         withDockerRegistry(credentialsId: 'dockerhub-nmd', url: 'https://index.docker.io/v1/') {
-    //             echo 'Bắt đầu tạo image'
-    //             sh 'docker build -t nguyenmanhdung/jenkins-helloworl:0.0.1 .'
-    //             echo 'Tạo image thành công'
-    //             echo 'Bắt đầu push image'
-    //             sh 'docker push nguyenmanhdung/jenkins-helloworl:0.0.1'
-    //             echo 'Push image thành công'
-    //         }
-    //     }
-    // }
+		stage('Run Container in Remote Server') {
+            steps {
+                script {                
+                	echo 'Kết nối remote server'
+                        script = "sshpass -p ${REMOTE_SERVER_PASSWORD} ssh -o StrictHostKeyChecking=no ${REMOTE_SERVER_USER}@${REMOTE_SERVER_IP} -p ${REMOTE_SERVER_SSH_PORT}"                        
+                    echo 'Kết nối {REMOTE_SERVER_IP} thành công'
+                    echo 'Pull Image ${IMAGE_VERSION}'
+                        script += " docker pull ${IMAGE_VERSION}" 
+                    echo 'Pull Image ${IMAGE_VERSION} thành công'
+                    echo 'Run Image ${IMAGE_VERSION}'                         
+                        script += " docker run -d -p 8080:8080 ${IMAGE_VERSION}"
+                    echo 'Run Image ${IMAGE_VERSION} thành công'     
+                        // script += " other_commands_here"
+                }
+            }
+        }
     }
 }
