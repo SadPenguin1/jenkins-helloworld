@@ -45,21 +45,32 @@ pipeline {
 		        }
 		    }
 		}
+		stage('SSH-Remote') {
+		    steps {
+		       sshagent(['ssh-remote-192.168.10.56']) {
+		       		sh "ssh -o StrictHostKeyChecking=no -l rnd ${REMOTE_SERVER_IP} ls"
+
+				}
+		    }
+		}
+
 		stage('Run Container in Remote Server') {
             steps {
                script {
-             	echo 'Kết nối remote server'
-            	sshCommand = "sshpass -p ${REMOTE_SERVER_PASSWORD} ssh -o StrictHostKeyChecking=no ${REMOTE_SERVER_USER}@${REMOTE_SERVER_IP} -p ${REMOTE_SERVER_SSH_PORT}"
-            	echo "Kết nối ${REMOTE_SERVER_IP} thành công"
-            	echo "Pull Image ${IMAGE_VERSION}"
-            	sshCommand += " docker pull ${IMAGE_VERSION}" 
-            	echo "Pull Image ${IMAGE_VERSION} thành công"
-            	echo "Run Image ${IMAGE_VERSION}"                         
-            	sshCommand += " docker run -d -p 8080:8080 ${IMAGE_VERSION}"
-            	echo "Run Image ${IMAGE_VERSION} thành công"
-            	sh sshCommand
+            echo 'Kết nối remote server'
+            sshCommand = "sshpass -p ${REMOTE_SERVER_PASSWORD} ssh -o StrictHostKeyChecking=no ${REMOTE_SERVER_USER}@${REMOTE_SERVER_IP} -p ${REMOTE_SERVER_SSH_PORT}"
+            echo "Kết nối ${REMOTE_SERVER_IP} thành công"
+
+            echo "Pull Image ${IMAGE_VERSION}"
+            sh "${sshCommand} docker pull ${IMAGE_VERSION}" 
+            echo "Pull Image ${IMAGE_VERSION} thành công"
+
+            echo "Run Image ${IMAGE_VERSION}"                         
+            sh "${sshCommand} docker run -d -p 8080:8080 ${IMAGE_VERSION}"
+            echo "Run Image ${IMAGE_VERSION} thành công"
+        }
            
-       	 			}
+       	 }
             }
         }
     }
