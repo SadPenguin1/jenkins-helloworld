@@ -16,7 +16,8 @@ pipeline {
         stage('Check Maven Version') {
             steps {
                 script {
-                    sh 'chmod +x mvnw
+                    sh 'ls'
+                    sh 'chmod +x mvnw'
                     sh './mvnw clean install'
                 }
             }
