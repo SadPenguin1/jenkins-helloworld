@@ -1,0 +1,25 @@
+pipeline {
+    agent any
+    environment {
+        REMOTE_SERVER_IP = '192.168.10.56'
+        REMOTE_SERVER_SSH_PORT = '22'
+        REMOTE_SERVER_USER = 'rnd'
+        REMOTE_SERVER_PASSWORD = 'abcd456789'
+        IMAGE_VERSION = 'nguyenmanhdung/jenkins-helloworld:0.0.2'
+    }
+    stages {
+        stage('Clone stage') {
+            steps {
+                echo 'Hello Nguyen Manh Dung'
+            }
+        }
+        stage('Check Maven Version') {
+            steps {
+                script {
+                    sh 'mvn --version'
+                    sh 'docker --version'
+                }
+            }
+        }
+    }
+}
