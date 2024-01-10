@@ -21,7 +21,7 @@ class SumServiceImpl implements SumServiceInterface {
 		return c;
 	}
 	public int Sub(int a, int b) {
-		int c = a + b;
+		int c = a - b;
 		return c;
 	}
 
