@@ -1,11 +1,10 @@
 pipeline {
     agent any
     environment {
-        REMOTE_SERVER_IP = '192.168.10.56'
-        REMOTE_SERVER_SSH_PORT = '22'
-        REMOTE_SERVER_USER = 'rnd'
-        REMOTE_SERVER_PASSWORD = 'abcd456789'
-        IMAGE_VERSION = 'nguyenmanhdung/jenkins-helloworld:0.0.2'
+        OPENSHIFT_SERVER = 'https://api.mano.5glab.istt:6443'
+        OPENSHIFT_TOKEN = 'sha256~a9COoKL4XFitKb9y41GjnAzxTUj53U1HpCwql06-0HA'
+        OPENSHIFT_PROJECT = 'jenkins-cicd'
+        BUILD_CONFIG_NAME = 'helloworld' 
     }
     stages {
         stage('Clone stage') {
@@ -22,5 +21,17 @@ pipeline {
 		       }
             }
         }
+        stage('Build') {
+            steps {
+                script {
+                    openshift.withCluster( server: OPENSHIFT_SERVER, token: OPENSHIFT_TOKEN ) {
+                        openshift.withProject( OPENSHIFT_PROJECT ) {
+                            openshift.withBuildConfig( BUILD_CONFIG_NAME ) {
+                                openshift.build()
+                            }
+                        }
+                    }
+                }
+            }
     }
 }
