@@ -15,11 +15,11 @@ pipeline {
         }
         stage('Check Maven Version') {
             steps {
-                script {
-                    sh 'ls'
-                    sh 'chmod +x mvnw'
-                    sh './mvnw clean install'
-                }
+            	dir('test') {
+		                sh 'ls'
+                    	sh 'chmod +x mvnw'
+                    	sh './mvnw clean install'
+		       }
             }
         }
     }
