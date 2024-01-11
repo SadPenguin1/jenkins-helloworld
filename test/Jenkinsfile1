@@ -21,11 +21,11 @@ pipeline {
 		       }
             }
         }
-        stage('Build') {
+        stage('Docker Build') {
             steps {
             	dir('test') {
                 script {
-                  sh 'oc start-build helloworld'
+                   binaryBuild(buildConfigName: jenkins-helloworld1, buildFromPath: ".")
                   }
                }
             }
