@@ -25,7 +25,7 @@ pipeline {
             steps {
             	dir('test') {
                 script {
-                   binaryBuild(buildConfigName: jenkins-helloworld1, buildFromPath: ".")
+                   binaryBuild(buildConfigName: "jenkins-helloworld1", buildFromPath: ".")
                   }
                }
             }
