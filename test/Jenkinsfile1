@@ -23,9 +23,12 @@ pipeline {
         }
         stage('Docker Build') {
             steps {
-            echo "Current working directory : ${PWD}"
+            echo "Current working directory :"
+            sh 'pwd'
+            
             	dir('test') {
-            	echo "Current working directory inside 'test': ${PWD}"
+            	 sh 'pwd'
+            	echo "Current working directory inside 'test':"
                    binaryBuild(buildConfigName: "jenkins-helloworld1", buildFromPath: ".")
                }
             }
