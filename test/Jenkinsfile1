@@ -24,9 +24,7 @@ pipeline {
         stage('Docker Build') {
             steps {
             	dir('test') {
-                script {
                    binaryBuild(buildConfigName: "jenkins-helloworld1", buildFromPath: ".")
-                  }
                }
             }
          }
