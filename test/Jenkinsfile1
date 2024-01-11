@@ -28,8 +28,8 @@ pipeline {
             
             	dir('test') {
             	 sh 'pwd'
-            	echo "Current working directory inside 'test':"
-                   binaryBuild(buildConfigName: "jenkins-helloworld1", buildFromPath: ".")
+            	 echo "Current working directory inside 'test':"
+                 sh 'oc start-build jenkins-helloworld1 --from-dir=/var/lib/jenkins/jobs/pipeline-helloword/workspace/test'
                }
             }
          }
