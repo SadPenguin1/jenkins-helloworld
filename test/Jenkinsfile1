@@ -23,16 +23,12 @@ pipeline {
         }
         stage('Build') {
             steps {
+            	dir('test') {
                 script {
-                    openshift.withCluster( server: OPENSHIFT_SERVER, token: OPENSHIFT_TOKEN ) {
-                        openshift.withProject( OPENSHIFT_PROJECT ) {
-                            openshift.withBuildConfig( BUILD_CONFIG_NAME ) {
-                                openshift.build()
-                            }
-                        }
-                    }
-                }
+                  sh 'oc start-build helloworld'
+                  }
+               }
             }
          }
-    }
+      }
 }
