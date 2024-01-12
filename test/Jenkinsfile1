@@ -33,5 +33,17 @@ pipeline {
                }
             }
          }
+         stage('Deployment') {
+            steps {
+      
+            sh 'pwd'
+            
+            	dir('test') {
+            	 sh 'pwd'
+                 sh 'oc apply -f /var/lib/jenkins/jobs/pipeline-helloword/workspace/test/OpenShift.yaml'
+'
+               }
+            }
+         }
       }
 }
